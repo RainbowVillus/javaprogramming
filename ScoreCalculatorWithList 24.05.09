@@ -17,22 +17,33 @@ import java.util.ArrayList;
  */
 public class ScoreCalculatorWithList {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Calculator calculator = new CalculatorImpl();
+	public static void main(String[] args) {
+	    Scanner scanner = new Scanner(System.in);
+	    Calculator calculator = new CalculatorImpl();
 
-        while (true) {
-            System.out.println("Enter the subject and score.");
-            System.out.print("> ");
-            String subject = scanner.next();
-            if (subject.equals("exit")) {
-                break;
-            }
-            int score = scanner.nextInt();
-            calculator.addScore(subject, score);
-        }
-        System.out.printf("Subject Counts: %d; Average: %.2f; ", calculator.getSubjectCount(), calculator.getAverage());
-    }
+	    while (true) {
+	        System.out.println("Enter the subject and score.");
+	        System.out.print("> ");
+	        String subject = scanner.next();
+	        if (subject.equals("exit")) {
+	            break;
+	        }
+	        String scoreInput = scanner.nextLine().trim(); // 값이 없는 경우를 처리하기 위해 공백을 제거하여 읽음
+	        if (scoreInput.isEmpty()) {
+	            System.out.println("Invalid input! Please enter a valid score.");
+	            continue;
+	        }
+	        if (!scoreInput.matches("\\d+")) {
+	            System.out.println("Invalid input! Please enter a valid score.");
+	            continue;
+	        }
+	        int score = Integer.parseInt(scoreInput);
+	        calculator.addScore(subject, score);
+	    }
+	    System.out.printf("Subject Counts: %d; Average: %.2f; ", calculator.getSubjectCount(), calculator.getAverage());
+	}
+
+
 
     interface Calculator {
         void addScore(String subject, int score);
